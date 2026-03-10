@@ -149,7 +149,11 @@ function createEventButton(eventsLayer, events, event, index, assignedLanes) {
         <span class="calendarEventDescription">${event.description}</span>
         `;
     }
-
+    // Attaches event listener to event
+    eventButton.addEventListener("click", (clickEvent) => {
+        clickEvent.stopPropagation(); // Stops popup from instantly closing
+        showCurrentEvent(event, clickEvent);
+    });
     eventsLayer.appendChild(eventButton);
 }
 
@@ -243,4 +247,50 @@ function getSlotDuration() {
     const value = document.getElementById('slotDurationSelect')?.value;
     const parsedValue = parseInt(value, 10);
     return Number.isNaN(parsedValue) ? 60 : parsedValue;
+}
+
+// Creates a popup for the event clicked that shows more info about it.
+// Displays popup at position clicked
+function showCurrentEvent(event, clickEvent) {
+    const currentEvent = document.getElementById("currentEventPopup");
+
+    document.getElementById("currentEventTitle").textContent = event.title;
+    document.getElementById("currentEventTime").textContent = event.timeStart + " - " + event.timeEnd;
+    document.getElementById("currentEventDescription").textContent = event.description;
+    document.getElementById("currentEventAddress").textContent = event.address;
+    currentEvent.style.display = "block";
+    document.addEventListener("click", closeCurrentEvent);
+
+    const popupWidth = currentEvent.offsetWidth;
+    const popupHeight = currentEvent.offsetHeight;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    const x = clickEvent.pageX;
+    const y = clickEvent.pageY;
+    // Stops popup from going off screen to the right
+    if (x + popupWidth > screenWidth) {
+        x = clickEvent.pageX - popupWidth;
+    }
+    // Stops popup from going off screen on the bottom
+    if (y + popupHeight > screenHeight) {
+        y = clickEvent.pageY - popupHeight;
+    }
+    currentEvent.style.left = x + "px";
+    currentEvent.style.top = y + "px";
+
+    document.getElementById("editEventButton").addEventListener("click", editCurrentEvent);
+}
+
+// Closes the event popup by clicking anywhere outside the popup
+function closeCurrentEvent(clickEvent) {
+    const currentEvent = document.getElementById("currentEventPopup");
+    if (!currentEvent.contains(clickEvent.target)) {
+        currentEvent.style.display = "none";
+        document.removeEventListener("click", closeCurrentEvent);
+    }
+}
+
+// Will open the editor for the selected event
+function editCurrentEvent() {
+    console.log("Test. Add stuff later");
 }

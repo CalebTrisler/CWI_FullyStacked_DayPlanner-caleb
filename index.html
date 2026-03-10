@@ -29,36 +29,6 @@
       <button class="displayChangeButton">Month</button>
     </div>
   </header>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Day Planner</title>
-    <link rel="stylesheet" href="baseStyling.css" />
-    <link rel="stylesheet" href="eventForm.css" />
-    <script src="./modules/main.js" type="module"></script>
-  </head>
-  <body>
-    <!--  -->
-    <!-- Top of the app with title, today's date, and weather container -->
-    <!-- 15% of screen height -->
-    <!--  -->
-    <header id="appHeader" class="basicContainer">
-      <h3 id="appTitle">Day Planner</h3>
-      <div id="headerInfoContainer">
-        <div id="headerDateContainer">Tuesday, Feb 10</div>
-        <div id="headerWeatherContainer">
-          <div id="weatherDisplay">
-            <p>Weather loading...</p>
-          </div>
-        </div>
-      </div>
-      <!-- Holds the buttons that swap calendar view between Day, Week, Month -->
-      <div id="displayButtonsContainer">
-        <button class="displayChangeButton highlightDisplayButton">Day</button>
-        <button class="displayChangeButton">Week</button>
-        <button class="displayChangeButton">Month</button>
-      </div>
-    </header>
 
   <!--  -->
   <!-- Main container that will hold calendar view and events -->
@@ -130,6 +100,14 @@
       </div>
     </form>
     <!--  -->
+  </div>
+  <!--Event Popup-->
+  <div id="currentEventPopup" class="currentEvent">
+    <h2 id="currentEventTitle"></h2>
+    <p id="currentEventTime"></p>
+    <p id="currentEventAddress"></p>
+    <p id="currentEventDescription"></p>
+    <button type="button" id="editEventButton">Edit</button>
   </div>
 </body>
 
