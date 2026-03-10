@@ -9,7 +9,6 @@ const menuItems = [
     name: "Light Mode",
     icon: "../assets/icons/moon.svg",
     setting: function () {
-      console.log("Light mode: " + appSettings.lightMode);
       return appSettings.lightMode;
     },
     click: appSettings.toggleLightMode,
@@ -115,6 +114,7 @@ function openMenu() {
   menuContainer.classList.toggle("hidden");
   console.log("Menu Open");
   menuIsOpen = true;
+  document.addEventListener("click", outsideClickListener);
 }
 
 function closeMenu() {
@@ -123,6 +123,21 @@ function closeMenu() {
   console.log("Menu Closed");
   menuIsOpen = false;
   appSettings.saveSettings();
+  document.removeEventListener("click", outsideClickListener);
+}
+
+function outsideClickListener(event) {
+  if (event.target === menuButton) return;
+
+  const menuItems = document.querySelectorAll(".menuItemContainer");
+
+  // Check if the event.target clicked matches any of the menu items
+  const clickedInsideMenu = [...menuItems].some((item) =>
+    item.contains(event.target),
+  );
+  if (!clickedInsideMenu) {
+    closeMenu();
+  }
 }
 
 let menuButton;

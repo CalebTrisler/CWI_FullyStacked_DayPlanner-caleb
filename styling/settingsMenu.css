@@ -1,6 +1,6 @@
 .settingsMenuButton {
   position: absolute;
-  top: .25rem;
+  top: 0.25rem;
   right: 1%;
   z-index: 21;
 
@@ -32,7 +32,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.25rem;
 
   width: 100%;
   height: 100%;
@@ -49,10 +48,18 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 16rem;
-  padding: 0.25rem;
   gap: 0.5rem;
+
+  padding: 0.25rem;
+  width: 16rem;
+  height: 3rem;
+
   background-color: white;
+  border: solid 1px black;
+  border-radius: .5rem 0 0 .25rem;
+
+  /* Keeps borders from overlapping and doubling in thickness */
+  margin-bottom: -1px;
 }
 
 .menuItemName {

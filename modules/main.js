@@ -17,7 +17,6 @@ import runTests from "../tests/runTests.js";
 // Load events and user settings from localStorage when the application starts
 const allEvents = StorageManager.loadAllEvents();
 appSettings.loadSettings();
-console.log(appSettings.lightMode);
 
 createSettingsMenu();
 
