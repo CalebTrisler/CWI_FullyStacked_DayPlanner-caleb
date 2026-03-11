@@ -302,11 +302,11 @@ function showClickedEventPopup(event, clickEvent) {
   const clickedEventPopup = document.getElementById("clickedEventPopup");
 
   document.getElementById("clickedEventPopupTitle").textContent = event.title;
-  document.getElementById("clickedEventPopupTime").textContent = `${formatTime(event.timeStart)} - ${formatTime(event.timeEnd)}`;
+  document.getElementById("clickedEventPopupTime").textContent = `${Calendar.formatTime(event.timeStart)} - ${Calendar.formatTime(event.timeEnd)}`;
   document.getElementById("clickedEventPopupDescription").textContent = "Description: " + event.description;
   document.getElementById("clickedEventPopupAddress").textContent = "Address: " + event.address;
   clickedEventPopup.style.display = "block";
-  document.addEventListener("click", closeClickedEventPopup);
+  document.addEventListener("click", isClickOutsideEvent);
 
   const popupWidth = clickedEventPopup.offsetWidth;
   const popupHeight = clickedEventPopup.offsetHeight;
@@ -339,7 +339,7 @@ function isClickOutsideEvent(clickEvent) {
 
 function closeClickedEventPopup() {
     clickedEventPopup.style.display = "none";
-    document.removeEventListener("click", closeClickedEventPopup);
+    document.removeEventListener("click", isClickedOutsideEvent);
 }
 
 // Will open the editor for the selected event
