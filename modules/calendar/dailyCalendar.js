@@ -1,6 +1,7 @@
 "use strict";
 
 import * as Calendar from "./calendar.js";
+import {openEventEditor} from "../eventManager.js";
 
 // Render the single day view of the calendar
 export function renderSingleDay(events, viewDate) {
@@ -305,7 +306,9 @@ function showClickedEventPopup(event) {
   document.getElementById("clickedEventPopupTime").textContent = `${Calendar.formatTime(event.timeStart)} - ${Calendar.formatTime(event.timeEnd)}`;
   document.getElementById("clickedEventPopupDescription").textContent = "Description: " + event.description;
   document.getElementById("clickedEventPopupAddress").textContent = "Address: " + event.address;
-  document.getElementById("editEventButton").addEventListener("click", editClickedEventPopup);
+  document.getElementById("editEventButton").onclick = () => {
+    editClickedEventPopup(event);
+  };
   document.addEventListener("click", isClickOutsideEvent);
   clickedEventPopup.style.display = "block";
   clickedEventPopup.style.borderTop = `5px solid ${event.color}`;
@@ -326,7 +329,7 @@ function closeClickedEventPopup() {
 }
 
 // Will open the editor for the selected event
-function editClickedEventPopup() {
-  console.log("Test. Add stuff later");
+function editClickedEventPopup(event) {
+  openEventEditor(event.UID);
   closeClickedEventPopup();
 }
