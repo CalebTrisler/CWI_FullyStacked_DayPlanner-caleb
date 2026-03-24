@@ -1,0 +1,35 @@
+{
+  "name": "cwi_planner",
+  "version": "1.0.0",
+  "description": "A team project for CWI's CPSC-208 Intro to Full Stack Web Development course.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "webpack --mode development",
+    "build-prod": "webpack --mode production",
+    "deploy": "npm run build-prod && gh-pages -d dist",
+    "start": "webpack serve --open --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/socrastein/CWI_FullyStacked_DayPlanner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/socrastein/CWI_FullyStacked_DayPlanner/issues"
+  },
+  "homepage": "https://socrastein.github.io/CWI_FullyStacked_DayPlanner/",
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "babel-loader": "^10.1.1",
+    "gh-pages": "^6.3.0",
+    "webpack": "^5.105.4",
+    "webpack-cli": "^7.0.2",
+    "webpack-dev-server": "^5.2.3"
+  }
+}
