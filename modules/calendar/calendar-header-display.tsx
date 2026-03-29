@@ -7,8 +7,13 @@ type CalendarHeaderDisplayProps = {
   };
 };
 
-// Displays the header date based on the viewing date and calendar view
+/**
+ * A component that represents the header date display (e.g. "March 28, 2026").
+ * @param state - The state of the calendar.
+ * @returns The JSX element
+ */
 function CalendarHeaderDisplay({ state }: CalendarHeaderDisplayProps) {
+  // Get the viewing date and calendar view from the state.
   const { viewDate: viewingDate, calendarView } = state;
 
   return <span>{formatHeaderDate(viewingDate, calendarView)}</span>;

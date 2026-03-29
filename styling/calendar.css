@@ -41,7 +41,7 @@
   @media (min-width: 768px) {
     #calendarViewArea {
       grid-column: span 6;
-    }
+    } 
   }
   
   /* Two-column layout: time labels | day grid */

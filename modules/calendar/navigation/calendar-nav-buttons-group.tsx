@@ -8,7 +8,12 @@ type CalendarNavButtonsGroupProps = {
   onRender: () => void;
 };
 
-// Renders the calendar navigation buttons
+/**
+ * A component that represents a group of buttons to navigate the calendar by one day, week, or month.
+ * @param state - The state of the calendar.
+ * @param onRender - Function to call when a button is clicked.
+ * @returns The JSX element
+ */
 function CalendarNavButtonsGroup({
   state,
   onRender,

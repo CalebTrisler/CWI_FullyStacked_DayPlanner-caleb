@@ -3,10 +3,16 @@ import { CalendarView } from "../calendar";
 
 type CalendarDisplayButtonsGroupProps = {
   activeView: "day" | "week" | "month" | string;
+  // A function to call when a button is clicked. The parent gets to decide what to do within this function.
   onSelectView: (view: string) => void;
 };
 
-// Renders the calendar display buttons
+/**
+ * A component that represents a group of buttons to change the calendar view.
+ * @param activeView - The current view of the calendar.
+ * @param onSelectView - Function to call when a button is clicked.
+ * @returns The JSX element
+ */
 function CalendarDisplayButtonsGroup({
   activeView,
   onSelectView,

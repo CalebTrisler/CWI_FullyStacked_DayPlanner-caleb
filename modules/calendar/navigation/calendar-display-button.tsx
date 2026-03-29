@@ -4,7 +4,13 @@ type CalendarDisplayButtonProps = {
   onClick: () => void; // Function to re-render the calendar
 };
 
-// Renders the calendar display button
+/**
+ * A component that represents a button to change the calendar view.
+ * @param calendarView - The view to display.
+ * @param isActive - Whether the button is active.
+ * @param onClick - Function to call when the button is clicked.
+ * @returns void
+ */
 function CalendarDisplayButton({
   calendarView,
   isActive,

@@ -11,7 +11,14 @@ type CalendarNavButtonProps = {
   children: React.ReactNode;
 };
 
-// Renders a calendar navigation button component
+/**
+ * A component that represents a button to navigate the calendar by one day, week, or month.
+ * @param children - The icon to be displayed on the button.
+ * @param state - The state of the calendar.
+ * @param direction - The direction to navigate the calendar.
+ * @param onRender - Function to call when the button is clicked.
+ * @returns The JSX element
+ */
 function CalendarNavButton({
   children, // This allows the parent component to pass in the icon to be displayed on the button
   state,

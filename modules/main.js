@@ -9,7 +9,6 @@ import StorageManager from "./dataStorage.js";
 import appSettings from "./settings.js";
 import createSettingsMenu from "./settingsMenu.js";
 
-import { CalendarView } from "./calendar/calendar.js";
 import initTodayButton from "./todayButton.js";
 
 import { initializeEventManager } from "./eventManager.js";
@@ -27,12 +26,8 @@ createSettingsMenu();
 
 initializeEventManager();
 
-const viewDate = new Date();
-viewDate.setHours(0, 0, 0, 0);
-const calendarState = { viewDate, calendarView: CalendarView.DAY, allEvents};
-
 // Initialize and render all of the calendar UI components (e.g. display (view) buttons, navigation buttons, and the full calendar)
-initializeCalendarUI(calendarState);
+initializeCalendarUI(allEvents);
 
 initTodayButton();
 loadWeatherDisplay();
