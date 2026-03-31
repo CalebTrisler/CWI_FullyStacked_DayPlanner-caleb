@@ -1,9 +1,9 @@
-import { CalendarView } from "./calendar";
+import { CalendarViews } from "../enumCalendarViews";
 
 type CalendarHeaderDisplayProps = {
   state: {
     viewDate: Date;
-    calendarView: "day" | "week" | "month" | string;
+    calendarView: CalendarViews;
   };
 };
 
@@ -22,10 +22,10 @@ function CalendarHeaderDisplay({ state }: CalendarHeaderDisplayProps) {
 // Formats the header date based on the viewing date and calendar view
 function formatHeaderDate(
   viewingDate: Date,
-  calendarView: "day" | "week" | "month" | string,
+  calendarView: CalendarViews,
 ): string {
   let headerDate = "";
-  if (calendarView === CalendarView.DAY) {
+  if (calendarView === CalendarViews.Day) {
     // Format the viewing date as a full date for day view
     headerDate = viewingDate.toLocaleDateString("en-US", {
       weekday: "long",
@@ -33,12 +33,12 @@ function formatHeaderDate(
       day: "numeric",
       year: "numeric",
     });
-  } else if (calendarView === CalendarView.WEEK) {
+  } else if (calendarView === CalendarViews.Week) {
     // Format the viewing date as a range of dates for week view
     const end = new Date(viewingDate);
     end.setDate(end.getDate() + 6);
     headerDate = `${viewingDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${end.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
-  } else if (calendarView === CalendarView.MONTH) {
+  } else if (calendarView === CalendarViews.Month) {
     // Format the viewing date as a full month for month view
     headerDate = viewingDate.toLocaleDateString("en-US", {
       month: "long",

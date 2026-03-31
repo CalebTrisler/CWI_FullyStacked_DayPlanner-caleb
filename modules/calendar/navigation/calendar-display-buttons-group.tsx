@@ -1,10 +1,10 @@
 import CalendarDisplayButton from "../navigation/calendar-display-button";
-import { CalendarView } from "../calendar";
+import { CalendarViews } from "../../enumCalendarViews";
 
 type CalendarDisplayButtonsGroupProps = {
   activeView: "day" | "week" | "month" | string;
   // A function to call when a button is clicked. The parent gets to decide what to do within this function.
-  onSelectView: (view: string) => void;
+  onSelectView: (view: CalendarViews) => void;
 };
 
 /**
@@ -21,21 +21,21 @@ function CalendarDisplayButtonsGroup({
     <>
       {/* Day view button */}
       <CalendarDisplayButton
-        calendarView={CalendarView.DAY}
-        isActive={activeView === CalendarView.DAY}
-        onClick={() => onSelectView(CalendarView.DAY)}
+        calendarView={CalendarViews.Day}
+        isActive={activeView === CalendarViews.Day}
+        onClick={() => onSelectView(CalendarViews.Day)}
       />
       {/* Week view button */}
       <CalendarDisplayButton
-        calendarView={CalendarView.WEEK}
-        isActive={activeView === CalendarView.WEEK}
-        onClick={() => onSelectView(CalendarView.WEEK)}
+        calendarView={CalendarViews.Week}
+        isActive={activeView === CalendarViews.Week}
+        onClick={() => onSelectView(CalendarViews.Week)}
       />
       {/* Month view button */}
       <CalendarDisplayButton
-        calendarView={CalendarView.MONTH}
-        isActive={activeView === CalendarView.MONTH}
-        onClick={() => onSelectView(CalendarView.MONTH)}
+        calendarView={CalendarViews.Month}
+        isActive={activeView === CalendarViews.Month}
+        onClick={() => onSelectView(CalendarViews.Month)}
       />
     </>
   );

@@ -1,11 +1,9 @@
 import React from "react";
-import { CalendarView } from "../calendar";
+import appState from "../../appState";
+import { CalendarViews } from "../../enumCalendarViews";
 
 type CalendarNavButtonProps = {
-  state: {
-    viewDate: Date;
-    calendarView: string;
-  };
+  calendarState: { viewDate: Date };
   direction?: "subtract" | "add"; // "add" means go to next day/week/month; "subtract" means go to previous day/week/month
   onRender: () => void;
   children: React.ReactNode;
@@ -14,14 +12,14 @@ type CalendarNavButtonProps = {
 /**
  * A component that represents a button to navigate the calendar by one day, week, or month.
  * @param children - The icon to be displayed on the button.
- * @param state - The state of the calendar.
+ * @param calendarState - Shared state; viewDate is assigned on navigate (must be the same object calendar-ui uses).
  * @param direction - The direction to navigate the calendar.
  * @param onRender - Function to call when the button is clicked.
  * @returns The JSX element
  */
 function CalendarNavButton({
   children, // This allows the parent component to pass in the icon to be displayed on the button
-  state,
+  calendarState,
   direction = "add", // Default to going to next day/week/month
   onRender,
 }: CalendarNavButtonProps) {
@@ -30,27 +28,28 @@ function CalendarNavButton({
     e.preventDefault(); // Prevent the default behavior of the button
 
     const delta = direction === "add" ? 1 : -1;
+    const current = calendarState.viewDate;
 
-    switch (state.calendarView) {
-      case CalendarView.DAY:
-        state.viewDate = navigateDay(state.viewDate, delta);
+    // Read view mode at click time so Day/Week/Month toggles apply even if this subtree was not re-rendered.
+    switch (appState.calendarView) {
+      case CalendarViews.Day:
+        calendarState.viewDate = navigateDay(current, delta);
         break;
-      case CalendarView.WEEK:
-        state.viewDate = navigateWeek(state.viewDate, delta);
+      case CalendarViews.Week:
+        calendarState.viewDate = navigateWeek(current, delta);
         break;
-      case CalendarView.MONTH:
-        state.viewDate = navigateMonth(state.viewDate, delta);
+      case CalendarViews.Month:
+        calendarState.viewDate = navigateMonth(current, delta);
         break;
       default:
-        state.viewDate = navigateDay(state.viewDate, delta);
+        calendarState.viewDate = navigateDay(current, delta);
     }
 
-    // Re-render the calendar
     onRender();
   };
 
   return (
-    <button type="button" className="calendarNavButton" onClick={handleClick}>
+    <button type="button" id="calendarNavButton" className="btn btn-sm btn-primary d-flex justify-content-center align-items-center" onClick={handleClick}>
       {children}
     </button>
   );

@@ -1,13 +1,14 @@
 import { createRoot, type Root } from "react-dom/client";
 import CalendarDisplayButtonsGroup from "./navigation/calendar-display-buttons-group";
 import CalendarNavButtonsGroup from "./navigation/calendar-nav-buttons-group";
-import { CalendarView, renderCalendarView } from "./calendar";
+import { renderCalendarView } from "./calendar";
 import CalendarEvent from "../classCalendarEvent";
 import { CalendarHeaderDisplay } from "./calendar-header-display";
+import appState from "../appState";
+import { CalendarViews } from "../enumCalendarViews";
 
 // State of the calendar UI. Update this interface to add or remove properties needed for the calendar UI. Don't forget to update the calendarState in main.js for now. Until we have a better way.
 type CalendarUIState = {
-  calendarView: "day" | "week" | "month" | string;
   viewDate: Date;
   allEvents: CalendarEvent[];
 };
@@ -21,7 +22,7 @@ function initializeCalendarUI(allEvents: CalendarEvent[]): void {
   // Moved from main.js
   const viewDate = new Date();
   viewDate.setHours(0, 0, 0, 0);
-  const calendarState = { viewDate, calendarView: CalendarView.DAY, allEvents };
+  const calendarState = { viewDate, allEvents };
 
   renderCalendarViewButtons(calendarState); // Render the 'Day', 'Week', 'Month' buttons.
   renderCalendarNavigationButtons(calendarState); // Render the previous and next buttons.
@@ -36,9 +37,9 @@ function initializeCalendarUI(allEvents: CalendarEvent[]): void {
 // Render the calendar view for the given calendar state. This function should be called when the calendar state changes (e.g. when the user clicks a button to change the view).
 function renderCalendar(calendarState: CalendarUIState): void {
   renderCalendarView(
-    calendarState.allEvents,
+    appState.allEventsByUID,
     calendarState.viewDate,
-    calendarState.calendarView,
+    appState.calendarView,
   );
 
   renderCalendarHeaderDisplay(calendarState);
@@ -58,9 +59,9 @@ function renderCalendarViewButtons(calendarState: CalendarUIState): void {
     const renderDisplayButtons = () => {
       displayButtonsRoot.render(
         <CalendarDisplayButtonsGroup
-          activeView={calendarState.calendarView}
-          onSelectView={(view) => {
-            calendarState.calendarView = view;
+          activeView={appState.calendarView}
+          onSelectView={(view: CalendarViews) => {
+            appState.calendarView = view;
             renderCalendar(calendarState);
             renderDisplayButtons();
           }}
@@ -89,10 +90,8 @@ function renderCalendarNavigationButtons(calendarState: CalendarUIState): void {
     const renderCalendarNavButtons = () => {
       calendarNavigationButtonsRoot.render(
         <CalendarNavButtonsGroup
-          state={calendarState}
-          onRender={() => {
-            renderCalendar(calendarState);
-          }}
+          calendarState={calendarState}
+          onRender={() => renderCalendar(calendarState)}
         />,
       );
     };
@@ -117,7 +116,7 @@ function renderCalendarHeaderDisplay(calendarState: CalendarUIState): void {
     const renderHeaderDateDisplay = () => {
       // We know that the root does exist at this point.
       headerDateContainerRoot!.render(
-        <CalendarHeaderDisplay state={calendarState} />,
+        <CalendarHeaderDisplay state={{viewDate: calendarState.viewDate, calendarView: appState.calendarView}} />,
       );
     };
 
