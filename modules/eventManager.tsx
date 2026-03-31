@@ -9,7 +9,7 @@ import appState from "./appState";
 
 // TODO: Add non null verification/exception handling
 
-// Root element for event form component
+// Root element container for event form component
 const eventFormRootElement: HTMLElement | null = document.getElementById("eventFormRoot");
 
 //edit state variable
@@ -56,7 +56,7 @@ function showEventManager(UID: string | null = null): void {
   }
 
   function submit(component: React.SubmitEvent<HTMLFormElement>) {
-    submitEvent(component);
+    submitEvent(component, UID);
     close();
   }
 
@@ -73,26 +73,25 @@ function showEventManager(UID: string | null = null): void {
  * Uses StorageManager to store the event in localStorage
  * @param {HTMLFormElement} event - The form element containing event details
  */
-function submitEvent(event: React.SubmitEvent<HTMLFormElement>): void {
+function submitEvent(event: React.SubmitEvent<HTMLFormElement>, UID: String | null): void {
   event.preventDefault();
   // Pull form from the event
   const eventForm: HTMLFormElement = event.currentTarget;
   // Extract form data and create event object
-  const data: FormData= new FormData(eventForm);
+  const data: FormData = new FormData(eventForm);
   const eventProps: any = Object.fromEntries(data);
   // Validate form input data
   if (!validateEventSubmission(eventProps)) {
     eventForm.reportValidity();
     return;
   }
-  // Generate and assign UID, save event, and hide the event creation form
-  //*Caleb edit.*  adjusted the id const to check if editingEventUID has a value to keep that value, otherwise run generateUID() function.
-  const id = editingEventUID ?? generateUID();
-  eventProps.UID = id;
+  // Generate and assign UID if not provided, save event, and hide the event creation form
+  eventProps.UID = UID ?? generateUID();
+  console.log("after" + eventProps.UID);
   const newEvent = new CalendarEvent(eventProps);
   appState.addEvent(newEvent);
   calenderEventRefresh();
-  console.log("Event saved (UID: " + id + ")");
+  console.log("Event saved (UID: " + eventProps.UID + ")");
   console.log(newEvent);
 }
 
