@@ -5,23 +5,19 @@ import "../styling/dayCalendar.css";
 import "../styling/eventForm.css";
 import "../styling/weeklyCalendar.css";
 
-import StorageManager from "./dataStorage";
+import appState from "./appState";
 import appSettings from "./settings";
 import createSettingsMenu from "./settingsMenu";
 
 import initTodayButton from "./todayButton.js";
-
 import { initializeEventManager } from "./eventManager";
+import { initializeCalendarUI } from "./calendar/calendar-ui";
 
 import { loadWeatherDisplay } from "./weatherDisplay";
 
 import runTests from "../tests/runTests.js";
-import { initializeCalendarUI } from "./calendar/calendar-ui";
 
-// TODO: change this to utilize appState.eventsByUID and appState.eventsByDate instead of loading events from storage.
-const allEvents = StorageManager.loadAllEvents();
 appSettings.loadSettings();
-
 createSettingsMenu();
 
 initializeEventManager();
