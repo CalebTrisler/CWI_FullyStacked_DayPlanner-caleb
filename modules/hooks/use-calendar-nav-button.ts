@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import appState from "../appState";
 import { CalendarViews } from "../enumCalendarViews";
-// import { calendarNavigationFunctionsTest } from "../../tests/calendar-navigation-tests";
 
 /**
  * A hook that handles the click event for a calendar navigation button that navigates the calendar by day, week, or month.
@@ -36,34 +35,37 @@ export function applyCalendarNavigation(navDirection: number): void {
   // Read view mode at click time so Day/Week/Month toggles apply even if this subtree was not re-rendered.
   switch (appState.calendarView) {
     case CalendarViews.Day:
-      appState.dateView = navigateDay(currentDate, navDirection);
+      appState.dateView = addDay(currentDate, navDirection);
       break;
     case CalendarViews.Week:
-      appState.dateView = navigateWeek(currentDate, navDirection);
+      appState.dateView = addWeek(currentDate, navDirection);
       break;
     case CalendarViews.Month:
-      appState.dateView = navigateMonth(currentDate, navDirection);
+      appState.dateView = addMonth(currentDate, navDirection);
       break;
-    default:
-      appState.dateView = navigateDay(currentDate, navDirection);
   }
 }
 
 // Adds a single day to the view date
-function navigateDay(date: Date, navDirection: number): string {
+function addDay(date: Date, navDirection: number): string {
   const newDate = new Date(date.getTime());
   newDate.setDate(newDate.getDate() + navDirection);
   return newDate.toLocaleDateString("en-CA");
 }
 
 // Adds a single week to the view date
-function navigateWeek(date: Date, navDirection: number): string {
-  return navigateDay(date, navDirection * 7);
+function addWeek(date: Date, navDirection: number): string {
+  return addDay(date, navDirection * 7);
 }
 
 // Adds a single month to the view date. Clamps the day (e.g. Mar 31 + 1 → Apr 30) so
 // setMonth does not overflow into the next month.
-function navigateMonth(date: Date, navDirection: number): string {
+function addMonth(date: Date, navDirection: number): string {
+  return clampDayToAddedMonth(date, navDirection).toLocaleDateString("en-CA");
+}
+
+// Keeps the original day unless it would overflow into the next month, in which case it clamps to the last day of the month.
+function clampDayToAddedMonth(date: Date, navDirection: number): Date {
   const day = date.getDate();
   const newDate = new Date(date.getTime());
   // Set the day to the first day of the month
@@ -79,8 +81,5 @@ function navigateMonth(date: Date, navDirection: number): string {
 
   // Set the day to the minimum of the current day and the last day of the month
   newDate.setDate(Math.min(day, lastDay));
-  return newDate.toLocaleDateString("en-CA");
+  return newDate;
 }
-
-// Test the calendar navigation functions. Comment out when not testing.
-// calendarNavigationFunctionsTest({ navigateDay, navigateWeek, navigateMonth });
