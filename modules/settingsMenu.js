@@ -1,6 +1,7 @@
 import "../styling/settingsMenu.css";
 
 import appSettings from "./settings";
+import { loadWeatherDisplay, refreshWeatherFromCache } from "./weatherDisplay";
 
 // Icons for menuItems
 import moonIcon from "../assets/icons/moon.svg";
@@ -28,7 +29,10 @@ const menuItems = [
     setting: function () {
       return appSettings.tempUnit[0] + "°";
     },
-    click: appSettings.toggleTempUnit,
+    click: function () {
+      appSettings.toggleTempUnit();
+      loadWeatherDisplay("Boise");
+    },
   },
   {
     name: "Week Start",
