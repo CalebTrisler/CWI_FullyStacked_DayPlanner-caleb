@@ -112,8 +112,6 @@ function submitEvent(
     appState.dateViewObject,
     appState.calendarView,
   );
-  console.log("Event saved (UID: " + eventProps.UID + ")");
-  console.log(newEvent);
 }
 
 /**
