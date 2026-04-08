@@ -2,7 +2,7 @@ import { CalendarViews } from "../enumCalendarViews";
 import { useAppStateStore } from "../appState";
 
 import appState from "../appState";
-import appSettings from "../settings";
+import appSettings from "../appSettings";
 
 /**
  * A component that represents the header date display (e.g. "March 28, 2026").

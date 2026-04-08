@@ -46,25 +46,14 @@ class AppState {
 
   private _eventsByUID = mapEventsByUID(this._loadedEvents);
   private _eventsByDate = mapEventsByDate(this._loadedEvents);
-  private _dateView = new Date().toLocaleDateString("en-CA");
 
+  // Set date view to current date in "YYYY-MM-DD" format
+  private _dateView = new Date().toLocaleDateString("en-CA");
+  // Load calendar view from storage; defaults to "day" if not saved
   private _calendarView = StorageManager.loadCalendarView();
 
   // Set of listener functions to call whenever the app state changes (e.g. when events are added, edited, or deleted)
   private listeners = new Set<() => void>();
-
-  constructor() {
-    const loadedEvents = StorageManager.loadAllEvents();
-
-    this._eventsByUID = mapEventsByUID(loadedEvents);
-    this._eventsByDate = mapEventsByDate(loadedEvents);
-
-    // Set date view to current date in "YYYY-MM-DD" format
-    this._dateView = new Date().toLocaleDateString("en-CA");
-
-    // Load calendar view from storage, default to "day" if not saved
-    this._calendarView = StorageManager.loadCalendarView();
-  }
 
   /**
    * Returns a Map of all events keyed by their UID,
@@ -293,6 +282,9 @@ registerCheatCode(() => {
   console.log("Loading mock events...");
   const events = createMockEvents();
   events.forEach((event) => appState.addEvent(event));
+
+  // Reload the page to update the UI with the new events
+  location.reload();
 });
 
 /**

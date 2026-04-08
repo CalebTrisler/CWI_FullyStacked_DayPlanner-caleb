@@ -5,8 +5,7 @@ import "../styling/dayCalendar.css";
 import "../styling/eventForm.css";
 import "../styling/weeklyCalendar.css";
 
-import appState from "./appState";
-import appSettings from "./settings";
+import appSettings from "./appSettings";
 import createSettingsMenu from "./settingsMenu";
 
 import { initializeEventManager } from "./eventManager";
