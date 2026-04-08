@@ -40,7 +40,6 @@ function formatSingleDay(date: Date) {
 // "Apr 5 - Apr 11, 2026" if first day of week is set to Sunday
 // "Apr 6 - Apr 12, 2026" if first day of week is set to Monday
 function formatWeekRange(date: Date) {
-  console.log(appSettings.firstDayOfWeek);
   const firstDayIndex = appSettings.firstDayOfWeek === "Monday" ? 1 : 0;
   const dayOfWeek = date.getDay();
 
