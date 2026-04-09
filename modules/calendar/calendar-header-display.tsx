@@ -1,26 +1,33 @@
 import { CalendarViews } from "../enumCalendarViews";
-import { useAppStateStore } from "../appState";
-
-import appState from "../appState";
-import appSettings from "../appSettings";
+import { useAppState } from "../appState";
+import { useAppSettings } from "../appSettings";
 
 /**
  * A component that represents the header date display (e.g. "March 28, 2026").
  * @returns The JSX element
  */
 function CalendarHeaderDisplay() {
-  const appState = useAppStateStore();
-  return <span>{formatHeaderDate(appState.calendarView)}</span>;
+  const { calendarView, dateView } = useAppState();
+  const { firstDayOfWeek } = useAppSettings();
+  return (
+    <span>{formatHeaderDate(calendarView, dateView, firstDayOfWeek)}</span>
+  );
 }
 
 // Formats the header date based on the viewing date and calendar view
-function formatHeaderDate(calendarView: CalendarViews): string {
-  const date = appState.dateViewObject;
+function formatHeaderDate(
+  calendarView: CalendarViews,
+  dateView: string,
+  firstDayOfWeek: string,
+): string {
+  const date = new Date(dateView);
+  date.setHours(0, 0, 0, 0);
+
   switch (calendarView) {
     case "day":
       return formatSingleDay(date);
     case "week":
-      return formatWeekRange(date);
+      return formatWeekRange(date, firstDayOfWeek);
     case "month":
       return formatMonth(date);
     default:
@@ -39,8 +46,8 @@ function formatSingleDay(date: Date) {
 
 // "Apr 5 - Apr 11, 2026" if first day of week is set to Sunday
 // "Apr 6 - Apr 12, 2026" if first day of week is set to Monday
-function formatWeekRange(date: Date) {
-  const firstDayIndex = appSettings.firstDayOfWeek === "Monday" ? 1 : 0;
+function formatWeekRange(date: Date, firstDayOfWeek: string) {
+  const firstDayIndex = firstDayOfWeek === "Monday" ? 1 : 0;
   const dayOfWeek = date.getDay();
 
   const daysFromStart = (dayOfWeek - firstDayIndex + 7) % 7;

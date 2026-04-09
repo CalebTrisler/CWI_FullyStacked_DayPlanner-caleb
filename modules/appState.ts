@@ -293,7 +293,7 @@ registerCheatCode(() => {
  * of the app state and can update its UI if needed. *
  */
 
-export function useAppStateStore() {
+export function useAppState() {
   return useSyncExternalStore(
     (listener) => appState.subscribe(listener),
     () => appState.getSnapshot(),
