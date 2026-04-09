@@ -61,7 +61,7 @@ class AppState {
   // Set of listener functions to call whenever the app state changes (e.g. when events are added, edited, or deleted)
   private listeners = new Set<() => void>();
 
-  //this constructor loads teh year on startup to set holiday to current year on startup.
+  //this constructor loads the year on startup to set holiday to current year on startup.
   constructor() {
     this.loadHolidayEventsForYear(this.dateViewObject.getFullYear());
   }
@@ -82,7 +82,7 @@ class AppState {
    * @param year Four-digit year to load holiday events for
    */
   loadHolidayEventsForYear(year: number): void {
-    if (this._loadedHolidayYears.has(year)) {
+    if (this.areHolidaysLoadedForYear(year)) {
       return;
     }
 
@@ -99,6 +99,15 @@ class AppState {
     });
 
     this._loadedHolidayYears.add(year);
+  }
+
+  /**
+   * returns true if holiday events have already been loaded for the given year.
+   * @param year
+   * @returns true if year is already loaded into holiday map, otherwise false.
+   */
+  areHolidaysLoadedForYear(year: number): boolean {
+    return this._loadedHolidayYears.has(year);
   }
 
   /**
@@ -261,7 +270,12 @@ class AppState {
       );
     }
     this._dateView = date;
-    this.loadHolidayEventsForYear(this.dateViewObject.getFullYear());
+
+    const year = this.dateViewObject.getFullYear();
+    if (!this.areHolidaysLoadedForYear(year)) {
+      this.loadHolidayEventsForYear(year);
+    }
+
     this.notifyListeners();
   }
 

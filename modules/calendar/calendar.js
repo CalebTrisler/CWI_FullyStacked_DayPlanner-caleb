@@ -46,8 +46,6 @@ export function renderCalendarView(
   if (calendarViewArea)
     calendarViewArea.setAttribute("data-calendar-view", calendarView); // Sets the 'data-calendar-view' attribute so we can show/hide the correct content.
 
-  //keep for later.  Do not delete yet.
-  //const filteredDateEvents = appState.getEventsByDate(viewDate.toLocaleDateString("en-CA"))
   const filteredDateEvents = getRenderableEventsForDate(viewDate);
 
   switch (calendarView) {
