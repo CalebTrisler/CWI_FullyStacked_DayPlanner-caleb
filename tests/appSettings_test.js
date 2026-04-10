@@ -26,8 +26,6 @@ export default function appSettingsTests() {
       );
   }
 
-  console.log("🧪 Testing AppSettings...");
-
   // Save all initial values so we can restore them after the suite
   const initialLightMode = appSettings.lightMode;
   const initialTempUnit = appSettings.tempUnit;

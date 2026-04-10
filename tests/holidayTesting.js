@@ -14,7 +14,6 @@ function holidayTests() {
     passed++;
   }
 
-  console.log("🧪 Testing Holiday Events for 2026...");
   const holidays2026 = getHolidayEvents(2026);
 
   const expectedHolidayDates = {

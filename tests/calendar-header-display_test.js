@@ -28,8 +28,6 @@ export default function calendarHeaderDisplayTests() {
     return new Date(y, m - 1, day);
   }
 
-  console.log("🧪 Testing formatHeaderDate...");
-
   // ── DAY VIEW ─────────────────────────────
 
   test("day view formats mid-month date", () => {
