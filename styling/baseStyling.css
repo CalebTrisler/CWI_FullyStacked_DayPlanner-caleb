@@ -1,6 +1,6 @@
 html,
 body {
-  height: 100%;
+  height: 100dvh;
 }
 
 body {
@@ -11,10 +11,6 @@ body {
   @media (min-width: 768px) {
     padding-inline: 1rem;
   }
-}
-
-:root {
-  --bottom-nav-height: 3.25rem;
 }
 
 #headerDate {
