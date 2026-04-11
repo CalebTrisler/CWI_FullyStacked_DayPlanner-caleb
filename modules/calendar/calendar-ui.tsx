@@ -5,7 +5,9 @@ import { renderCalendarView, CalendarView } from "./calendar";
 import { CalendarHeaderDisplay } from "./calendar-header-display";
 import appState from "../appState";
 import { CalendarViews } from "../enumCalendarViews";
-
+import { CalendarAllDayDisplay } from "./calendar-all-day-display";
+import { getAllDayDisplayItems } from "./all-day-display-items";
+import { type AllDayDisplayItem } from "./all-day-display-items";
 /**
  * Initializes the calendar UI and renders the components. This function should only call the render functions for the calendar UI components.
  * @returns void
@@ -13,6 +15,7 @@ import { CalendarViews } from "../enumCalendarViews";
 function initializeCalendarUI(): void {
   renderCalendarViewButtons(); // Render the 'Day', 'Week', 'Month' buttons.
   renderCalendarNavigationButtons(); // Render the previous and next buttons.
+  renderAllDayDisplay(); //renders the allday display above the calendar and under the header.
 
   renderCalendar(); // Render the whole calendar view that includes the events per slot.
 
@@ -23,6 +26,8 @@ function initializeCalendarUI(): void {
 
 // Render the calendar view for the given calendar state. This function should be called when the calendar state changes (e.g. when the user clicks a button to change the view).
 function renderCalendar(): void {
+  renderAllDayDisplay();
+
   renderCalendarView(
     appState.allEventsByDate,
     appState.dateViewObject,
@@ -101,5 +106,26 @@ const headerDateRoot = createRoot(
 // One render call to initialize and then useAppStateStore will
 // update it automatically when the dateView changes.
 headerDateRoot.render(<CalendarHeaderDisplay />);
+
+/**
+ * renders the allday display bellow the header but above the calendar display
+ */
+function renderAllDayDisplay(): void {
+  const allDayDisplayRootElement = document.getElementById(
+    "calendarAllDayDisplayRoot",
+  );
+
+  // Stop if the root element isn't on the page
+  if (!allDayDisplayRootElement) {
+    return;
+  }
+
+  const allDayDisplayRoot = createRoot(allDayDisplayRootElement);
+  const allDayDisplayItems = getAllDayDisplayItems();
+
+  allDayDisplayRoot.render(
+    <CalendarAllDayDisplay items={allDayDisplayItems} />,
+  );
+}
 
 export { initializeCalendarUI };
