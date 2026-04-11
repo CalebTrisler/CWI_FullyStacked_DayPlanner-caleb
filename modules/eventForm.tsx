@@ -53,7 +53,7 @@ export default function EventForm({
             required
           />
           <label htmlFor="eventEndTime">
-            End Time <span>*</span>
+            End Time <span className="text-danger">*</span>
           </label>
           <input
             type="time"
