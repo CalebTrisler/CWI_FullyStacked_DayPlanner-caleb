@@ -112,40 +112,6 @@ function holidayDefinitions(year) {
   ];
 }
 
-function createMockAllDayEvents() {
-  const date = appState.dateView;
-
-  return [
-    new CalendarEvent({
-      UID: `allDay-test-holiday-1-${date}`,
-      title: "Test Holiday 1",
-      date,
-      timeStart: "00:00",
-      timeEnd: "01:00",
-      description: "Mock all-day holiday for testing",
-      address: "",
-    }),
-    new CalendarEvent({
-      UID: `allDay-test-holiday-2-${date}`,
-      title: "Test Holiday 2",
-      date,
-      timeStart: "00:00",
-      timeEnd: "01:00",
-      description: "Mock all-day holiday for testing",
-      address: "",
-    }),
-    new CalendarEvent({
-      UID: `allDay-test-holiday-3-${date}`,
-      title: "Test Holiday 3",
-      date,
-      timeStart: "00:00",
-      timeEnd: "01:00",
-      description: "Mock all-day holiday for testing",
-      address: "",
-    }),
-  ];
-}
-
 /**
  *generates all holiday events for the provided year by running through holidayDefinitions[] and using createHolidayEvent() on each to create a new array
  the return events are created in Calenderevent and are *not* loaded from storage.
