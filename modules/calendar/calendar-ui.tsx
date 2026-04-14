@@ -6,7 +6,6 @@ import { CalendarHeaderDisplay } from "./calendar-header-display";
 import appState from "../appState";
 import { CalendarViews } from "../enumCalendarViews";
 import { CalendarAllDayDisplay } from "./calendar-all-day-display";
-import { getAllDayDisplayItems } from "./all-day-display-items";
 
 /**
  * Initializes the calendar UI and renders the components. This function should only call the render functions for the calendar UI components.

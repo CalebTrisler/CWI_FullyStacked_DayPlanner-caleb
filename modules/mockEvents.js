@@ -194,6 +194,38 @@ const mockEvents = [
   },
 ];
 
+function createMockAllDayEvents(date) {
+  return [
+    new CalendarEvent({
+      UID: `allDay-test-holiday-1-${date}`,
+      title: "Birthday",
+      date,
+      timeStart: "00:00",
+      timeEnd: "01:00",
+      description: "Mock all-day holiday for testing",
+      address: "",
+    }),
+    new CalendarEvent({
+      UID: `allDay-test-holiday-2-${date}`,
+      title: "Anniversary",
+      date,
+      timeStart: "00:00",
+      timeEnd: "01:00",
+      description: "Mock all-day holiday for testing",
+      address: "",
+    }),
+    new CalendarEvent({
+      UID: `allDay-test-holiday-3-${date}`,
+      title: "Taco Tuesday",
+      date,
+      timeStart: "00:00",
+      timeEnd: "01:00",
+      description: "Mock all-day holiday for testing",
+      address: "",
+    }),
+  ];
+}
+
 function createMockEvents() {
   return mockEvents.map((props) => new CalendarEvent(props));
 }
@@ -220,4 +252,4 @@ function registerCheatCode(callback, key = "F2", times = 3, timeout = 2000) {
   });
 }
 
-export { createMockEvents, registerCheatCode };
+export { createMockEvents, registerCheatCode, createMockAllDayEvents };
