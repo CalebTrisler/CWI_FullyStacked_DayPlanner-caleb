@@ -98,14 +98,31 @@ function submitEvent(
   // Extract form data and create event object
   const data: FormData = new FormData(eventForm);
   const eventProps: any = Object.fromEntries(data);
+
+  //allDay checkbox altering UID with prefix allDay-
+  const isAllDay = data.get("allDay") === "on";
+
+  //forces mock time to meet requirements for CalendarEvent generation
+  if (isAllDay) {
+    eventProps.timeStart = "00:00";
+    eventProps.timeEnd = "01:00";
+  }
+
   // Validate form input data
   if (!validateEventSubmission(eventProps)) {
     eventForm.reportValidity();
     return;
   }
-  // Generate and assign UID if not provided, save event, and hide the event creation form
-  eventProps.UID = UID ?? generateUID();
+  // if a UID exists, pull that UID, if isAllDay is true generate new UID with allDay- prefix, othwerwise generate a new UID, save and hide the eventform.
+  if (UID) {
+    eventProps.UID = UID;
+  } else if (isAllDay) {
+    eventProps.UID = `allDay-${generateUID()}`;
+  } else {
+    eventProps.UID = generateUID();
+  }
   const newEvent = new CalendarEvent(eventProps);
+
   appState.addEvent(newEvent);
   renderCalendarView(
     appState.allEventsByDate,

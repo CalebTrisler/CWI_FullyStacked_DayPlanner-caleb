@@ -1,6 +1,7 @@
 import React from "react";
 import appState from "./appState";
 import CalendarEvent from "./classCalendarEvent";
+import { useState } from "react";
 
 type eventFormProps = {
   UID: string | null;
@@ -21,6 +22,9 @@ export default function EventForm({
   const targetEvent: CalendarEvent | undefined = UID
     ? appState.getEventByUID(UID)
     : undefined;
+
+  const [isAllDay, setIsAllDay] = useState(false);
+
   // If UID is null, return an empty event form submission
   return (
     <div
@@ -64,7 +68,8 @@ export default function EventForm({
             name="timeStart"
             defaultValue={targetEvent?.timeStart}
             step={900}
-            required
+            required={!isAllDay}
+            disabled={isAllDay}
           />
           <label htmlFor="eventEndTime">
             End Time <span className="text-danger">*</span>
@@ -75,8 +80,22 @@ export default function EventForm({
             name="timeEnd"
             defaultValue={targetEvent?.timeEnd}
             step={900}
-            required
+            required={!isAllDay}
+            disabled={isAllDay}
           />
+          <div className="form-check mb-3">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="allDay"
+              name="allDay"
+              checked={isAllDay}
+              onChange={(event) => setIsAllDay(event.target.checked)}
+            />
+            <label className="form-check-label" htmlFor="allDay">
+              All-Day
+            </label>
+          </div>
           <label htmlFor="eventColor">Color</label>
           <input
             type="color"
