@@ -23,7 +23,11 @@ export default function EventForm({
     ? appState.getEventByUID(UID)
     : undefined;
 
-  const [isAllDay, setIsAllDay] = useState(false);
+  //use state and edit control consts
+  const isExistingAllDayEvent = Boolean(
+    targetEvent?.UID?.startsWith("allDay-"),
+  );
+  const [isAllDay, setIsAllDay] = useState(isExistingAllDayEvent);
 
   // If UID is null, return an empty event form submission
   return (
@@ -90,6 +94,7 @@ export default function EventForm({
               id="allDay"
               name="allDay"
               checked={isAllDay}
+              disabled={isExistingAllDayEvent}
               onChange={(event) => setIsAllDay(event.target.checked)}
             />
             <label className="form-check-label" htmlFor="allDay">
