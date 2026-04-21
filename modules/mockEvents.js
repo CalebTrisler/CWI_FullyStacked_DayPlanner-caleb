@@ -196,7 +196,7 @@ const mockEvents = [
   // All Day Mock Events
   {
     UID: `holiday-test-holiday-2-${getDate(0)}`,
-    title: "Anniversary",
+    title: "Federal Holiday",
     date: getDate(0),
     timeStart: "00:00",
     timeEnd: "23:45",
